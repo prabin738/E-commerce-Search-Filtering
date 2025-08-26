@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Category({ finalCategory, setCatName }) {
+export default function Category({ finalCategory, setCatName, catName }) {
   //run data in loop
 
   let cat = finalCategory.map((v, i) => {
@@ -8,7 +8,9 @@ export default function Category({ finalCategory, setCatName }) {
       <li
         onClick={() => setCatName(v)}
         key={i}
-        className="bg-[#ccc] p-[7px] cursor-pointer text-[20px] font-serif font-[500] mb-2"
+        className={`bg-[#ccc] p-[7px] cursor-pointer text-[20px] font-serif font-[500] mb-2 ${
+          catName === v ? "bg-blue-500" : ""
+        } `}
       >
         {v.name}
       </li>

@@ -64,7 +64,11 @@ const App = () => {
           <div className="grid grid-cols-[30%_auto] gap-[20px] ">
             <div>
               {/* {finalCategory.length} test data is fetched or not */}
-              <Category finalCategory={finalCategory} setCatName={setCatName} />
+              <Category
+                finalCategory={finalCategory}
+                setCatName={setCatName}
+                catName={catName}
+              />
             </div>
             <div>
               <div className="grid grid-cols-3 gap-5">
