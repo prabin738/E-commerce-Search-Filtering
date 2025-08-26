@@ -6,6 +6,7 @@ const App = () => {
   //objects are array that's why we are passing [] in usestate
   let [finalCategory, setFinalCategory] = useState([]);
   let [finalProduct, setFinalProduct] = useState([]);
+  let [catName, setCatName] = useState("");
 
   //function to get product categories
   let getCategory = () => {
@@ -37,6 +38,18 @@ const App = () => {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    if (catName !== "") {
+      axios
+        .get(`https://dummyjson.com/products/category/${catName.slug}`)
+        .then((proRes) => proRes.data)
+        .then((finalRes) => {
+          setFinalProduct(finalRes.products);
+          //products is from that api
+        });
+    }
+  }, [catName]);
+
   let Pitems = finalProduct.map((products, index) => {
     return <ProductItems key={index} pdata={products} />;
   });
@@ -51,10 +64,13 @@ const App = () => {
           <div className="grid grid-cols-[30%_auto] gap-[20px] ">
             <div>
               {/* {finalCategory.length} test data is fetched or not */}
-              <Category finalCategory={finalCategory} />
+              <Category finalCategory={finalCategory} setCatName={setCatName} />
             </div>
             <div>
-              <div className="grid grid-cols-3 gap-4">{Pitems}</div>
+              <div className="grid grid-cols-3 gap-5">
+                {finalProduct.length >= 1 ? Pitems : "No Product Found"}
+                {/* Before product load writ no product found */}
+              </div>
             </div>
           </div>
         </div>
@@ -66,15 +82,13 @@ const App = () => {
 export default App;
 
 function ProductItems({ pdata }) {
-  console.log(pdata);
+  // console.log(pdata);
   return (
     <div className="shadow-lg text-center pb-4 ">
-      <img
-        src="https://yuvaanjewels.com/wp-content/uploads/2025/08/IMG_20250812_172809_794.jpg"
-        alt=""
-      />
+      <img src={pdata.thumbnail} alt="" />
       <h4>{pdata.title}</h4>
       <b>$ {pdata.price}</b>
+      <p> {pdata.description} </p>
     </div>
   );
 }

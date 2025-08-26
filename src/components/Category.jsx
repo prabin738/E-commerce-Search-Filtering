@@ -1,11 +1,12 @@
 import React from "react";
 
-export default function Category({ finalCategory }) {
+export default function Category({ finalCategory, setCatName }) {
   //run data in loop
 
   let cat = finalCategory.map((v, i) => {
     return (
       <li
+        onClick={() => setCatName(v)}
         key={i}
         className="bg-[#ccc] p-[7px] cursor-pointer text-[20px] font-serif font-[500] mb-2"
       >
